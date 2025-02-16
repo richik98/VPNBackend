@@ -1,3 +1,4 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -13,6 +14,7 @@ import { VpnModule } from './vpn/vpn.module';
 
 @Module({
   imports: [
+    HttpModule,
     MongooseModule.forRoot('mongodb://localhost:27017/vpn-db'),
     VpnModule,
     ScheduleModule.forRoot(),

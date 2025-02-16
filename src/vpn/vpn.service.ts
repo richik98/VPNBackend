@@ -16,6 +16,17 @@ export class VpnService {
     private userSessionModel: Model<UserSessionDocument>,
   ) {}
 
+  // async getAvailableCountries() {
+  //   const availableCountries = await this.vpnProfileModel.aggregate([
+  //     { $match: { available: true } },
+  //     { $group: { _id: '$country', count: { $sum: 1 } } },
+  //     { $match: { count: { $gte: 2 } } }, // Only countries with 2+ profiles
+  //     { $project: { _id: 0, country: '$_id' } },
+  //   ]);
+  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //   return availableCountries;
+  // }
+
   async getAvailableCountries() {
     const availableCountries = await this.vpnProfileModel.aggregate([
       { $match: { available: true } },
@@ -23,8 +34,12 @@ export class VpnService {
       { $match: { count: { $gte: 2 } } }, // Only countries with 2+ profiles
       { $project: { _id: 0, country: '$_id' } },
     ]);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return availableCountries;
+
+    // Extract the countries into an array
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+    const countryList = availableCountries.map((item) => item.country);
+
+    return { availableCountries: countryList };
   }
 
   async assignVpnProfile(

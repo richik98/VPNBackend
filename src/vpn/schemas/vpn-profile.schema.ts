@@ -9,6 +9,7 @@ export class VpnProfile {
   @Prop({ required: true }) country: string;
   @Prop({ required: true }) configFile: string; // Store OVPN content as a string
   @Prop({ default: true }) available: boolean;
+  @Prop({ required: true }) vpnServerIp: string;
 }
 
 export const VpnProfileSchema = SchemaFactory.createForClass(VpnProfile);
